@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfFilme xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Filme>
+    <id>1</id>
+    <dataInicio>2023-12-29T00:00:00</dataInicio>
+    <dataFim>2023-12-31T00:00:00</dataFim>
+    <genero>terror</genero>
+    <titulo>a noiva cadaver</titulo>
+    <sinopse>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod sit amet sem quis semper. Suspendisse eleifend neque felis, eu placerat nulla auctor non. Nam tincidunt, turpis id iaculis rhoncus, lacus nunc blandit tortor, vitae placerat turpis turpis semper enim. Sed feugiat libero enim. Ut ut consequat eros, et sollicitudin augue. </sinopse>
+    <classificacao>12</classificacao>
+  </Filme>
+</ArrayOfFilme>

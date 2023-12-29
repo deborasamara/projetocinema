@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfUsuario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Usuario>
+    <id>1</id>
+    <cpf>999.999.999-98</cpf>
+    <nome>Fernanda</nome>
+    <email>fernanda26@gmail.com</email>
+    <senha>123456</senha>
+  </Usuario>
+</ArrayOfUsuario>
