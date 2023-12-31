@@ -2,16 +2,6 @@ using System;
 using System.Collections.Generic;
 
 static class View {
-/*
-static class View {
-  public static void ProdutoInserir(string nome, double preco, int estoque, int idCategoria) {
-    if (preco < 0) throw new ArgumentOutOfRangeException("Preço inválido");
-    if (estoque < 0) throw new ArgumentOutOfRangeException("Estoque inválido");
-    Produto p = new Produto{ Nome = nome, Preco = preco, Estoque = estoque, IdCategoria = idCategoria }; 
-    NProduto np = new NProduto();
-    np.Inserir(p);
-  }
-*/
     // CRUDs USUÁRIO
     public static void UsuarioInserir(string Nome, string Cpf, string Email, string Senha){
         Usuario x = new Usuario{nome = Nome, cpf = Cpf, email = Email, senha = Senha};
@@ -38,9 +28,13 @@ static class View {
 
     // CRUDs FILMES
     public static void FilmeInserir(DateTime DataInicio, DateTime DataFim, string Genero, string Titulo, string Sinopse, int Classificacao){
-        Filme x = new  Filme{dataInicio = DataInicio, dataFim = DataFim, genero = Genero, titulo = Titulo, sinopse =  Sinopse, classificacao = Classificacao};
-        NFilme y = new NFilme();
-        y.Inserir(x);
+        try{
+            Filme x = new  Filme{dataInicio = DataInicio, dataFim = DataFim, genero = Genero, titulo = Titulo, sinopse =  Sinopse, classificacao = Classificacao};
+            NFilme y = new NFilme();
+            y.Inserir(x);
+        }catch(Exception ex){
+            Console.WriteLine($"Algo deu errado no cadastro do filme! {ex.Message}");
+        }
     }
     
     public static List<Filme> FilmeListar(){
@@ -85,8 +79,8 @@ static class View {
     }
 
     // CRUDs sessoes
-     public static void SessaoInserir(){
-        Sessao x = new Sessao{};
+     public static void SessaoInserir(double Preco, DateTime DataSessao, int  Ingressos_disponiveis, int Sessao_sala, int Filme){
+        Sessao x = new Sessao{preco = Preco,  horario = DataSessao, ingressosDisponiveis = Ingressos_disponiveis, s_sala = Sessao_sala, f_filme = Filme};
         NSessao y = new NSessao();
         y.Inserir(x);
     }

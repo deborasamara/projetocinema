@@ -1,6 +1,7 @@
 ﻿using System; 
 using System.Collections.Generic;
 using System.IO;
+using System.Xml;
 using System.Linq.Expressions;
 using System.Xml.Serialization;
 using System.Linq;
@@ -59,17 +60,34 @@ public class Program {
             
           }else{
           // LOGA COMO CLIENTE
-            // Não é admin, então Ver se a conta existe
+            // Não é admin, então verificar se a conta existe
+
+
             Console.WriteLine("Bem vindo, Cliente!");
-            int op2 = MenuCliente();
+            int op2 = 0;
             // OPÇÕES DO CLIENTE
+            while (op2 != 99)
+            {
+              try{
+                 op2 = MenuCliente();
+                 // OPÇÕES DO ADMIN
+                  switch(op2){
+                  case 1: UsuarioInserir(); break;  // 
+                  case 2: UsuarioListar(); break;   //
+                  case 3: UsuarioAtualizar(); break; //
+                 }
+
+              }catch(Exception){
+
+              }
+            }
             
           }
 
           break;
 
         case 2: // Se cadastrar e ir pra tela de login
-
+        UsuarioInserir();  
         break;
 
         default:
@@ -284,8 +302,6 @@ public class Program {
 
   public static void IngressoAtualizar(){
     IngressoListar();
-
-    
   }
 
   public static void IngressoExcluir(){
@@ -293,9 +309,31 @@ public class Program {
   }
 
   public static void SessaoInserir(){
+    Console.WriteLine("Informe o preço dessa sessão");
+    double preco = double.Parse(Console.ReadLine());
+
+    Console.WriteLine("Informe o dia e horário dessa sessão - dd/MM/yyyy HH:mm");
+    DateTime dataSessao = DateTime.Parse(Console.ReadLine());
+
+    Console.WriteLine("Quantos ingressos estarão disponíveis?");
+    int ingressos_disponiveis = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Qual sala das disponíveis?");
+    int sessao_sala = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Qual id dos filmes disponíveis?");
+    
+    FilmeListar();
+    
+    int filme = int.Parse(Console.ReadLine());
+
+    View.SessaoInserir(preco, dataSessao, ingressos_disponiveis, sessao_sala, filme);
+
+    Console.WriteLine("Sessão cadastrada!");
 
   }
   public static void SessaoListar(){
+    
 
   }
 

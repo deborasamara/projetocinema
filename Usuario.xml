@@ -7,4 +7,18 @@
     <email>fernanda26@gmail.com</email>
     <senha>123456</senha>
   </Usuario>
+  <Usuario>
+    <id>2</id>
+    <cpf>999.999.999-99</cpf>
+    <nome>Josue da silva</nome>
+    <email>josuedasilva@gmail.com</email>
+    <senha>123456</senha>
+  </Usuario>
+  <Usuario>
+    <id>3</id>
+    <cpf>999.999.999-99</cpf>
+    <nome>diana</nome>
+    <email>diana@gmail.com</email>
+    <senha>123456</senha>
+  </Usuario>
 </ArrayOfUsuario>

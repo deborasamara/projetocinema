@@ -1,7 +1,5 @@
 
-
 using System; 
-
 public class Filme : IModelo {
   public int id{get; set;}
   public DateTime dataInicio{get; set;}
@@ -19,4 +17,3 @@ public class Filme : IModelo {
 class NFilme : NModelo<Filme>{
   public NFilme(): base("Filme.xml"){}
 }
-
