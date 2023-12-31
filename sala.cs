@@ -14,5 +14,5 @@ public class Sala : IModelo {
 }
 
 class NSala : NModelo<Sala> {
-  public NSala() : base("Categoria.xml") { }
+  public NSala() : base("Sala.xml") { }
 }

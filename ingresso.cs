@@ -6,9 +6,10 @@ using System.Xml.Serialization;
 
 public class Ingresso : IModelo {
   public int id{get; set;}
-  
+  public int idSessao {get; set;} 
+  public int idUsuario{get; set;}
   public override string ToString(){
-    return "Ingresso: " + id;
+    return "Ingresso: " + id + "Sessão: "+ idSessao;
   }
 }
 

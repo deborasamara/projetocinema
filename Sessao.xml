@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfSessao xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Sessao>
+    <id>1</id>
+    <preco>2550</preco>
+    <horario>2024-01-01T15:30:20</horario>
+    <ingressosDisponiveis>50</ingressosDisponiveis>
+    <idFilme>1</idFilme>
+    <idSala>1</idSala>
+  </Sessao>
+</ArrayOfSessao>

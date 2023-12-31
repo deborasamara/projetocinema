@@ -27,4 +27,13 @@
     <sinopse>lalalalallalalallalalalaallala</sinopse>
     <classificacao>15</classificacao>
   </Filme>
+  <Filme>
+    <id>4</id>
+    <dataInicio>2023-12-31T00:00:00</dataInicio>
+    <dataFim>2024-02-02T00:00:00</dataFim>
+    <genero>Suspense</genero>
+    <titulo>O suspense ideal</titulo>
+    <sinopse>o suspense ideal aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</sinopse>
+    <classificacao>21</classificacao>
+  </Filme>
 </ArrayOfFilme>

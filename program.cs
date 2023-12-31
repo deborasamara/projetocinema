@@ -50,6 +50,10 @@ public class Program {
                   case 14: SessaoListar(); break;
                   case 15: SessaoAtualizar(); break;
                   case 16: SessaoExcluir(); break;
+                  case 17: SalaInserir(); break;
+                  case 18: SalaListar(); break;
+                  case 19: SalaAtualizar(); break;
+                  case 20: SalaExcluir(); break;
                  }
 
               }catch(Exception){
@@ -115,8 +119,9 @@ public class Program {
       return "admin";
     }
     // verificar se o usuario existe
-    
-    return "usuario"; // é um cliente
+
+    return "usuario";
+
   }
 
   public static int MenuAdmin() {
@@ -147,6 +152,12 @@ public class Program {
     Console.WriteLine("15 - Atualizar");
     Console.WriteLine("16 - Excluir");
     Console.WriteLine();
+    Console.WriteLine("Menu Salas");
+    Console.WriteLine("17 - Inserir");
+    Console.WriteLine("18 - Listar");
+    Console.WriteLine("19 - Atualizar");
+    Console.WriteLine("20 - Excluir");
+    Console.WriteLine();
     Console.WriteLine("99 - Sair");
     Console.Write("\nOpção: ");
     return int.Parse(Console.ReadLine());
@@ -156,9 +167,8 @@ public class Program {
     Console.WriteLine();
     Console.WriteLine("OPÇÕES DO CLIENTE");
     Console.WriteLine();
-    Console.WriteLine("01 - Ver Filmes");
+    Console.WriteLine("01 - Ver Filmes Disponíveis");
     Console.WriteLine("02 - Ver Ingressos Comprados");
-    Console.WriteLine("03 - Comprar Ingresso");
     Console.WriteLine();
     Console.WriteLine("99 - Sair");
     Console.Write("\nOpção: ");
@@ -290,7 +300,11 @@ public class Program {
   }
 
   public static void IngressoInserir(){
-    View.IngressoInserir();
+    Console.Write("Informe o id da sessão: ");
+    int idSessao = int.Parse(Console.ReadLine());
+
+
+    View.IngressoInserir(idSessao);
   }
   public static void IngressoListar(){
     Console.WriteLine("Ingressos cadastrados");
@@ -315,50 +329,60 @@ public class Program {
     Console.WriteLine("Informe o dia e horário dessa sessão - dd/MM/yyyy HH:mm");
     DateTime dataSessao = DateTime.Parse(Console.ReadLine());
 
+    Console.WriteLine("Qual sala das disponíveis? - responder o número de id");
+    SalaListar();
+    int id_sessao_sala = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Qual filme dos disponíveis? - responder o número de id");
+    FilmeListar();
+    // Mostrar os ids dos filmes e entregar o nome do filme escolhido
+    int id_sessao_filme = int.Parse(Console.ReadLine());
+
     Console.WriteLine("Quantos ingressos estarão disponíveis?");
     int ingressos_disponiveis = int.Parse(Console.ReadLine());
 
-    Console.WriteLine("Qual sala das disponíveis?");
-    int sessao_sala = int.Parse(Console.ReadLine());
-
-    Console.WriteLine("Qual id dos filmes disponíveis?");
-    
-    FilmeListar();
-    
-    int filme = int.Parse(Console.ReadLine());
-
-    View.SessaoInserir(preco, dataSessao, ingressos_disponiveis, sessao_sala, filme);
+    View.SessaoInserir(preco, dataSessao, ingressos_disponiveis, id_sessao_sala, id_sessao_filme);
 
     Console.WriteLine("Sessão cadastrada!");
 
   }
-  public static void SessaoListar(){
-    
 
+  public static void SessaoListar(){
+    View.SessaoListar();
   }
 
   public static void SessaoAtualizar(){
+    View.SessaoAtualizar();
     
   }
 
   public static void SessaoExcluir(){
+    SessaoListar();
     
   }
 
   public static void SalaInserir(){
-
+    View.SalaInserir();
+    Console.WriteLine("Sala criada com sucesso!");
   }
   public static void SalaListar(){
+    View.SalaListar();
 
   }
 
   public static void SalaAtualizar(){
+    View.SalaAtualizar();
     
   }
 
   public static void SalaExcluir(){
+    Console.WriteLine("Qual Sala você deseja excluir? Digite o número");
+    int num_sala = int.Parse(Console.ReadLine());
+    SalaListar();
+    View.SalaExcluir(num_sala);
     
   }
+
 } // Chave do arquivo program
 
 

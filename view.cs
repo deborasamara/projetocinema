@@ -4,9 +4,13 @@ using System.Collections.Generic;
 static class View {
     // CRUDs USUÁRIO
     public static void UsuarioInserir(string Nome, string Cpf, string Email, string Senha){
-        Usuario x = new Usuario{nome = Nome, cpf = Cpf, email = Email, senha = Senha};
-        NUsuario y = new NUsuario();
-        y.Inserir(x);
+        try{
+            Usuario x = new Usuario{nome = Nome, cpf = Cpf, email = Email, senha = Senha};
+            NUsuario y = new NUsuario();
+            y.Inserir(x);
+        }catch(Exception ex){
+            Console.WriteLine($"Algo deu errado no cadastro do Usuário! {ex.Message}");
+        }
     }
 
     public static List<Usuario> UsuarioListar(){
@@ -55,10 +59,14 @@ static class View {
     }
 
     // CRUDs Ingressos
-     public static void IngressoInserir(){
-        Ingresso x = new Ingresso{};
-        NIngresso y = new NIngresso();
-        y.Inserir(x);
+     public static void IngressoInserir(int IdSessao){
+        try{
+            Ingresso x = new Ingresso{};
+            NIngresso y = new NIngresso();
+            y.Inserir(x);
+        }catch(Exception ex){
+            Console.WriteLine($"Algo deu errado no cadastro do ingresso! {ex.Message}");
+        }
     }
     
     public static List<Ingresso> IngressoListar(){
@@ -79,10 +87,15 @@ static class View {
     }
 
     // CRUDs sessoes
-     public static void SessaoInserir(double Preco, DateTime DataSessao, int  Ingressos_disponiveis, int Sessao_sala, int Filme){
-        Sessao x = new Sessao{preco = Preco,  horario = DataSessao, ingressosDisponiveis = Ingressos_disponiveis, s_sala = Sessao_sala, f_filme = Filme};
-        NSessao y = new NSessao();
-        y.Inserir(x);
+     public static void SessaoInserir(double Preco, DateTime DataSessao, int  Ingressos_disponiveis, int id_sessao_sala, int id_sessao_filme){
+        try{
+            Sessao x = new Sessao{preco = Preco,  horario = DataSessao, ingressosDisponiveis = Ingressos_disponiveis, idSala = id_sessao_sala, idFilme = id_sessao_filme};
+            NSessao y = new NSessao();
+            y.Inserir(x);
+
+        }catch(Exception ex){
+            Console.WriteLine($"Algo deu errado no cadastro da sessão! {ex.Message}");
+        }
     }
     
     public static List<Sessao> SessaoListar(){
@@ -104,9 +117,13 @@ static class View {
 
     // CRUDs sala
      public static void SalaInserir(){
-        Sala x = new Sala{};
-        NSala y = new NSala();
-        y.Inserir(x);
+        try{
+            Sala x = new Sala{};
+            NSala y = new NSala();
+            y.Inserir(x);
+        }catch(Exception ex){
+            Console.WriteLine($"Algo deu errado no cadastro da sala! {ex.Message}");
+        }
     }
     
     public static List<Sala> SalaListar(){
