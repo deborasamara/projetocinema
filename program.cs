@@ -9,6 +9,8 @@ using System.Xml.Linq;
 using System.Globalization;
 
 public class Program {
+  public static string UsuarioIdGlobal;
+  public static string UsuarioNomeGlobal;
 
   public static void Main() {
     
@@ -23,7 +25,8 @@ public class Program {
       switch(op){
         case 1: // Logar
         // LOGA COMO ADMIN
-          if(Login() == "admin"){
+        string resposta_login = Login();
+          if(resposta_login == "admin"){
             int op2 = 0;
           
             Console.WriteLine();
@@ -62,12 +65,12 @@ public class Program {
             }
             
             
-          }else{
+          }else if (resposta_login == "usuario"){
           // LOGA COMO CLIENTE
             // Não é admin, então verificar se a conta existe
 
 
-            Console.WriteLine("Bem vindo, Cliente!");
+            Console.WriteLine("Bem vindo, cliente "+ UsuarioNomeGlobal + " !" );
             int op2 = 0;
             // OPÇÕES DO CLIENTE
             while (op2 != 99)
@@ -86,12 +89,16 @@ public class Program {
               }
             }
             
+          }else{
+            Console.WriteLine("Esse usuário não existe. Tente se cadastrar no sistema e realizar o login novamente.");
+            Main();
           }
 
           break;
 
         case 2: // Se cadastrar e ir pra tela de login
         UsuarioInserir();  
+        Main();
         break;
 
         default:
@@ -119,10 +126,42 @@ public class Program {
       return "admin";
     }
     // verificar se o usuario existe
+    if(VerificarUsuario(email, senha)){
+      return "usuario";
+    }
 
-    return "usuario";
+    return "Esse usuário não existe.";
 
   }
+
+ // Verificar se o usuário existe no XML
+    public static bool VerificarUsuario(string email, string senha)
+    {
+        try
+        {
+            // Criar uma instância XmlDocument
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load("Usuario.xml");
+
+            // Encontrar o nó correspondente ao usuário
+            XmlNode usuarioNode = xmlDoc.SelectSingleNode($"//Usuario[email='{email}' and senha='{senha}']");
+            if (usuarioNode != null)
+            {
+                UsuarioIdGlobal = usuarioNode.SelectSingleNode("id").InnerText;
+                UsuarioNomeGlobal = usuarioNode.SelectSingleNode("nome").InnerText;
+            }
+
+            // Se o nó for encontrado, o usuário existe
+            return usuarioNode != null;
+
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Erro ao verificar o usuário: " + ex.Message);
+            return false;
+        }
+    }
+
 
   public static int MenuAdmin() {
     Console.WriteLine();
@@ -307,7 +346,7 @@ public class Program {
     View.IngressoInserir(idSessao);
   }
   public static void IngressoListar(){
-    Console.WriteLine("Ingressos cadastrados");
+    Console.WriteLine("Ingressos cadastrados no sistema");
     foreach (Ingresso u in View.IngressoListar())
     {
       Console.WriteLine(u.ToString());
@@ -316,6 +355,19 @@ public class Program {
 
   public static void IngressoAtualizar(){
     IngressoListar();
+    Console.WriteLine("Qual ingresso você deseja atualizar? Digite o id");
+    int id_ingresso = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Para qual sessão ele é atribuído? Digite o id");
+    SessaoListar();
+    int id_sessao = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Para qual usuário ele é atribuído? Digite o id");
+    UsuarioListar();
+    int id_usuario = int.Parse(Console.ReadLine());
+
+    View.IngressoAtualizar(id_ingresso, id_sessao, id_usuario);
+    Console.WriteLine("Ingresso"+ id_ingresso + "atualizado com sucesso!");
   }
 
   public static void IngressoExcluir(){
@@ -352,13 +404,39 @@ public class Program {
   }
 
   public static void SessaoAtualizar(){
-    View.SessaoAtualizar();
+    Console.WriteLine("Qual sessão você deseja atualizar? Digite o número");
+    SessaoListar();
+    int n_sessao = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Qual o preço?");
+    double preco = double.Parse(Console.ReadLine());
+
+    Console.WriteLine("Qual a data? dd/mm/yyy hh/mm/ss");
+    DateTime sessao_data = DateTime.Parse(Console.ReadLine());
+
+    Console.WriteLine("Quantos ingressos disponíveis?");
+    int sessao_ingressos = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Qual o id do Filme?");
+    int sessao_filme_id = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Qual o id da Sala?");
+    int sessao_sala_id = int.Parse(Console.ReadLine());
+
+
+    View.SessaoAtualizar(n_sessao, preco, sessao_data, sessao_ingressos, sessao_filme_id, sessao_sala_id);
+
+    Console.WriteLine("Sessão"+ n_sessao+ "atualizada com sucesso!");
     
   }
 
   public static void SessaoExcluir(){
     SessaoListar();
-    
+    Console.WriteLine("Qual sessão você deseja excluir?");
+    int id_sessao = int.Parse(Console.ReadLine());
+
+    View.SessaoExcluir(id_sessao);
+    Console.WriteLine("Sessao" + id_sessao + "excluída com sucesso!");
   }
 
   public static void SalaInserir(){
@@ -366,22 +444,30 @@ public class Program {
     Console.WriteLine("Sala criada com sucesso!");
   }
   public static void SalaListar(){
+    Console.WriteLine("Todas as salas:  ");
     View.SalaListar();
 
   }
 
   public static void SalaAtualizar(){
     View.SalaAtualizar();
-    
   }
 
   public static void SalaExcluir(){
     Console.WriteLine("Qual Sala você deseja excluir? Digite o número");
-    int num_sala = int.Parse(Console.ReadLine());
     SalaListar();
+    int num_sala = int.Parse(Console.ReadLine());
     View.SalaExcluir(num_sala);
-    
+    Console.WriteLine("Sala" + num_sala + "excluida com sucesso!");
   }
+
+  //public static void VerFilmesDisponiveis()
+
+  //public static void VeringressosComprados()
+
+  // ComprarIngresso
+  // Atualizar sessao
+  // IngressoInserir
 
 } // Chave do arquivo program
 

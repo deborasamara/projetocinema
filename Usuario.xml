@@ -21,4 +21,11 @@
     <email>diana@gmail.com</email>
     <senha>123456</senha>
   </Usuario>
+  <Usuario>
+    <id>4</id>
+    <cpf>aninha@gmail.com</cpf>
+    <nome>Aninha</nome>
+    <email>123456</email>
+    <senha>123456</senha>
+  </Usuario>
 </ArrayOfUsuario>

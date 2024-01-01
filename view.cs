@@ -74,8 +74,8 @@ static class View {
         return x.Listar();
     }
 
-    public static void IngressoAtualizar(){
-        Ingresso x = new  Ingresso{};
+    public static void IngressoAtualizar(int id_ingresso, int id_sessao, int id_usuario){
+        Ingresso x = new  Ingresso{id = id_ingresso, idSessao = id_sessao, idUsuario = id_usuario};
         NIngresso y = new NIngresso();
         y.Atualizar(x);
     }
@@ -103,9 +103,15 @@ static class View {
         return x.Listar();
     }
 
-    public static void SessaoAtualizar(){
-        Sala x = new  Sala{};
-        NSala y = new NSala();
+    public static void SessaoAtualizar(int n_sessao, double Preco, DateTime sessao_data, int sessao_ingressos, int sessao_filme_id, int sessao_sala_id){
+        Sessao x = new  Sessao{id = n_sessao, preco = Preco, horario = sessao_data, ingressosDisponiveis = sessao_ingressos, idFilme = sessao_filme_id, idSala = sessao_sala_id };
+        NSessao y = new NSessao();
+        y.Atualizar(x);
+    }
+
+    public static void SessaoAtualizarApenasIngresso(int n_sessao, int sessao_ingressos){
+        Sessao x = new  Sessao{id = n_sessao, ingressosDisponiveis = sessao_ingressos};
+        NSessao y = new NSessao();
         y.Atualizar(x);
     }
 

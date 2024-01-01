@@ -8,4 +8,12 @@
     <idFilme>1</idFilme>
     <idSala>1</idSala>
   </Sessao>
+  <Sessao>
+    <id>2</id>
+    <preco>50</preco>
+    <horario>2024-01-01T15:20:15</horario>
+    <ingressosDisponiveis>20</ingressosDisponiveis>
+    <idFilme>1</idFilme>
+    <idSala>2</idSala>
+  </Sessao>
 </ArrayOfSessao>
