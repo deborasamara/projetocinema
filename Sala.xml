@@ -2,17 +2,10 @@
 <ArrayOfSala xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Sala>
     <id>1</id>
+    <nome>A</nome>
   </Sala>
   <Sala>
     <id>2</id>
-  </Sala>
-  <Sala>
-    <id>3</id>
-  </Sala>
-  <Sala>
-    <id>4</id>
-  </Sala>
-  <Sala>
-    <id>5</id>
+    <nome>B</nome>
   </Sala>
 </ArrayOfSala>

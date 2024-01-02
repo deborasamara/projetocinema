@@ -1,14 +1,17 @@
 
 using System; 
 using System.Collections.Generic;
+using System.Data.Common;
 using System.IO;
 using System.Xml.Serialization;
 
 public class Sala : IModelo {
   public int id {get; set;}
 
+  public string nome {get; set;}
+
   public override string ToString(){
-    return "Sala: " + id;
+    return "Número: " +id + " Sala: " + nome;
   }
   
 }

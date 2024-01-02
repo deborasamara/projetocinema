@@ -77,11 +77,9 @@ public class Program {
             {
               try{
                  op2 = MenuCliente();
-                 // OPÇÕES DO ADMIN
                   switch(op2){
-                  case 1: UsuarioInserir(); break;  // 
-                  case 2: UsuarioListar(); break;   //
-                  case 3: UsuarioAtualizar(); break; //
+                  case 1: VerFilmesDisponiveis(); break;  
+                  case 2: VeringressosComprados(); break;   
                  }
 
               }catch(Exception){
@@ -242,6 +240,7 @@ public class Program {
     {
       Console.WriteLine(u.ToString());
     }
+    View.UsuarioListar();
   }
 
   public static void UsuarioAtualizar(){
@@ -378,8 +377,11 @@ public class Program {
     Console.WriteLine("Informe o preço dessa sessão");
     double preco = double.Parse(Console.ReadLine());
 
-    Console.WriteLine("Informe o dia e horário dessa sessão - dd/MM/yyyy HH:mm");
+    Console.WriteLine("Informe o dia dessa sessão - dd/MM/yyyy HH:mm");
     DateTime dataSessao = DateTime.Parse(Console.ReadLine());
+
+    Console.WriteLine("Informe o horário dessa sessão - HH:mm");
+    string horariosessao = Console.ReadLine();
 
     Console.WriteLine("Qual sala das disponíveis? - responder o número de id");
     SalaListar();
@@ -393,13 +395,18 @@ public class Program {
     Console.WriteLine("Quantos ingressos estarão disponíveis?");
     int ingressos_disponiveis = int.Parse(Console.ReadLine());
 
-    View.SessaoInserir(preco, dataSessao, ingressos_disponiveis, id_sessao_sala, id_sessao_filme);
+    View.SessaoInserir(preco, dataSessao, horariosessao, ingressos_disponiveis, id_sessao_sala, id_sessao_filme);
 
     Console.WriteLine("Sessão cadastrada!");
 
   }
 
   public static void SessaoListar(){
+    Console.WriteLine("Cadastro de Sessões: ");
+    foreach (Sessao u in View.SessaoListar())
+    {
+      Console.WriteLine(u.ToString());
+    }
     View.SessaoListar();
   }
 
@@ -411,8 +418,11 @@ public class Program {
     Console.WriteLine("Qual o preço?");
     double preco = double.Parse(Console.ReadLine());
 
-    Console.WriteLine("Qual a data? dd/mm/yyy hh/mm/ss");
+    Console.WriteLine("Qual a data? dd/mm/yyy");
     DateTime sessao_data = DateTime.Parse(Console.ReadLine());
+
+    Console.WriteLine("Qual o horário?");
+    string sessao_horario = Console.ReadLine();
 
     Console.WriteLine("Quantos ingressos disponíveis?");
     int sessao_ingressos = int.Parse(Console.ReadLine());
@@ -424,7 +434,7 @@ public class Program {
     int sessao_sala_id = int.Parse(Console.ReadLine());
 
 
-    View.SessaoAtualizar(n_sessao, preco, sessao_data, sessao_ingressos, sessao_filme_id, sessao_sala_id);
+    View.SessaoAtualizar(n_sessao, preco, sessao_data, sessao_horario, sessao_ingressos, sessao_filme_id, sessao_sala_id);
 
     Console.WriteLine("Sessão"+ n_sessao+ "atualizada com sucesso!");
     
@@ -440,17 +450,29 @@ public class Program {
   }
 
   public static void SalaInserir(){
-    View.SalaInserir();
+    Console.WriteLine("Qual o nome da sala que você deseja inserir?");
+    string nome_sala = Console.ReadLine();
+
+    View.SalaInserir(nome_sala);
     Console.WriteLine("Sala criada com sucesso!");
   }
   public static void SalaListar(){
     Console.WriteLine("Todas as salas:  ");
+    foreach (Sala u in View.SalaListar())
+    {
+      Console.WriteLine(u.ToString());
+    }
     View.SalaListar();
-
   }
 
   public static void SalaAtualizar(){
-    View.SalaAtualizar();
+    SalaListar();
+    Console.WriteLine("Qual o id sala que você deseja atualizar?");
+    int id_sala = int.Parse(Console.ReadLine());
+    Console.WriteLine("Qual o nome da sala?");
+    string nome_sala = Console.ReadLine();
+
+    View.SalaAtualizar(id_sala, nome_sala);
   }
 
   public static void SalaExcluir(){
@@ -461,9 +483,57 @@ public class Program {
     Console.WriteLine("Sala" + num_sala + "excluida com sucesso!");
   }
 
-  //public static void VerFilmesDisponiveis()
+  public static void VerFilmesDisponiveis(){
+    Console.WriteLine("Digite a data para qual você deseja ver os filmes disponíveis - dd/MM/yyyy");
+    DateTime data_sessao_disponivel = DateTime.Parse(Console.ReadLine());
 
-  //public static void VeringressosComprados()
+
+    XmlDocument documento_xml = new XmlDocument(); // instância da classe XMLDocument
+    documento_xml.Load("Sessao.xml"); // Carrega o conteúdo do XML do arquivo para ser consultado e manipulado
+    XmlNodeList sessoes_ = documento_xml.SelectNodes("//Sessao"); // Usa um método que seleciona todas as partes que se relacionam com "sessão" no arquivo. O xmlNodeList vai ter todos os elementos de sessão
+
+    if(sessoes_ != null){
+      Console.WriteLine($"Filmes disponíveis em {data_sessao_disponivel:dd/MM/yyyy}:");
+
+      foreach(XmlNode x in sessoes_){ // iterar os filmes do xml
+        DateTime dataSessao = DateTime.Parse(x.SelectSingleNode("dia_data").InnerText).Date; // selecionar o nó chamado "data" dentro do nó da sessão. Ao encontrar o primeiro "Nó" com a data pedida, retornar.
+        if( dataSessao == data_sessao_disponivel.Date){ // comparação. Se a data existir, então:
+
+          string idFilme = x.SelectSingleNode("id").InnerText; // Vai encontrar o id do filme. Precisamos acessar a lista XML dos filmes para pegar o título desse filme.
+          string horario_filme = x.SelectSingleNode("horario").InnerText;
+          string sala_filme = x.SelectSingleNode("idSala").InnerText;
+
+          List<string> titulosFilmesDisponiveis = new List<string>();
+
+          // xml da classe filme
+          XmlDocument documentoXmlFilme = new XmlDocument();
+          documentoXmlFilme.Load("Filme.xml");
+          XmlNode filmeNode = documentoXmlFilme.SelectSingleNode($"//Filme[id='{idFilme}']"); // achar o id do filme e procurar
+
+          string tituloFilmeString = filmeNode.SelectSingleNode("titulo").InnerText;
+          titulosFilmesDisponiveis.Add(tituloFilmeString);
+
+          Console.WriteLine($"Título do filme: {tituloFilmeString}  Preço:    Ingressos Disponíveis:   Horario:  {horario_filme}");
+
+        }else{
+          Console.WriteLine("Não há sessões de filmes para este dia!");
+        }
+      }
+
+
+    }
+
+
+
+
+
+
+
+  }
+
+  public static void VeringressosComprados(){
+
+  }
 
   // ComprarIngresso
   // Atualizar sessao

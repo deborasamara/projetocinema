@@ -87,9 +87,9 @@ static class View {
     }
 
     // CRUDs sessoes
-     public static void SessaoInserir(double Preco, DateTime DataSessao, int  Ingressos_disponiveis, int id_sessao_sala, int id_sessao_filme){
+     public static void SessaoInserir(double Preco, DateTime DataSessao, string horariosessao, int ingressos_disponiveis, int id_sessao_sala, int id_sessao_filme){
         try{
-            Sessao x = new Sessao{preco = Preco,  horario = DataSessao, ingressosDisponiveis = Ingressos_disponiveis, idSala = id_sessao_sala, idFilme = id_sessao_filme};
+            Sessao x = new Sessao{preco = Preco,  dia_data = DataSessao,  horario = horariosessao, ingressosDisponiveis = ingressos_disponiveis, idSala = id_sessao_sala, idFilme = id_sessao_filme};
             NSessao y = new NSessao();
             y.Inserir(x);
 
@@ -103,8 +103,8 @@ static class View {
         return x.Listar();
     }
 
-    public static void SessaoAtualizar(int n_sessao, double Preco, DateTime sessao_data, int sessao_ingressos, int sessao_filme_id, int sessao_sala_id){
-        Sessao x = new  Sessao{id = n_sessao, preco = Preco, horario = sessao_data, ingressosDisponiveis = sessao_ingressos, idFilme = sessao_filme_id, idSala = sessao_sala_id };
+    public static void SessaoAtualizar(int n_sessao, double Preco, DateTime DataSessao, string horariosessao, int ingressos_disponiveis, int id_sessao_sala, int id_sessao_filme){
+        Sessao x = new  Sessao{id = n_sessao, preco = Preco,  dia_data = DataSessao,  horario = horariosessao, ingressosDisponiveis = ingressos_disponiveis, idSala = id_sessao_sala, idFilme = id_sessao_filme };
         NSessao y = new NSessao();
         y.Atualizar(x);
     }
@@ -122,9 +122,9 @@ static class View {
     }
 
     // CRUDs sala
-     public static void SalaInserir(){
+     public static void SalaInserir(string nome_sala){
         try{
-            Sala x = new Sala{};
+            Sala x = new Sala{nome = nome_sala};
             NSala y = new NSala();
             y.Inserir(x);
         }catch(Exception ex){
@@ -137,8 +137,8 @@ static class View {
         return x.Listar();
     }
 
-    public static void SalaAtualizar(){
-        Sala x = new  Sala{};
+    public static void SalaAtualizar(int Id, string nome_sala){
+        Sala x = new  Sala{id = Id, nome = nome_sala};
         NSala y = new NSala();
         y.Atualizar(x);
     }
