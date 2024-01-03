@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfSessao xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Sessao>
     <id>1</id>
-    <preco>30</preco>
+    <preco>50</preco>
     <dia_data>2024-01-01T00:00:00</dia_data>
     <horario>15:30</horario>
-    <ingressosDisponiveis>50</ingressosDisponiveis>
-    <idFilme>1</idFilme>
-    <idSala>1</idSala>
+    <ingressosDisponiveis>48</ingressosDisponiveis>
+    <idFilme>4</idFilme>
+    <idSala>2</idSala>
   </Sessao>
 </ArrayOfSessao>

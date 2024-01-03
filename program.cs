@@ -337,12 +337,13 @@ public class Program {
     
   }
 
-  public static void IngressoInserir(){
-    Console.Write("Informe o id da sessão: ");
-    int idSessao = int.Parse(Console.ReadLine());
-
-
-    View.IngressoInserir(idSessao);
+  public static void IngressoInserir(){ // Insere ingresso e Atualiza os ingressos da sessão
+      Console.WriteLine("Qual sessão você deseja comprar? - Digite o ID da sessão");
+      int idDesejoSessao = int.Parse(Console.ReadLine());
+      int idUsuarioIngresso = int.Parse(UsuarioIdGlobal);
+      View.IngressoInserir(idDesejoSessao, idUsuarioIngresso);
+      View.SessaoAtualizarApenasIngresso(idDesejoSessao);
+     
   }
   public static void IngressoListar(){
     Console.WriteLine("Ingressos cadastrados no sistema");
@@ -491,6 +492,7 @@ public class Program {
     XmlDocument documento_xml = new XmlDocument(); // instância da classe XMLDocument
     documento_xml.Load("Sessao.xml"); // Carrega o conteúdo do XML do arquivo para ser consultado e manipulado
     XmlNodeList sessoes_ = documento_xml.SelectNodes("//Sessao"); // Usa um método que seleciona todas as partes que se relacionam com "sessão" no arquivo. O xmlNodeList vai ter todos os elementos de sessão
+    bool filmesDisponiveisSimNao = false;
 
     if(sessoes_ != null){
       Console.WriteLine($"Filmes disponíveis em {data_sessao_disponivel:dd/MM/yyyy}:");
@@ -498,10 +500,14 @@ public class Program {
       foreach(XmlNode x in sessoes_){ // iterar os filmes do xml
         DateTime dataSessao = DateTime.Parse(x.SelectSingleNode("dia_data").InnerText).Date; // selecionar o nó chamado "data" dentro do nó da sessão. Ao encontrar o primeiro "Nó" com a data pedida, retornar.
         if( dataSessao == data_sessao_disponivel.Date){ // comparação. Se a data existir, então:
+          filmesDisponiveisSimNao = true;
 
-          string idFilme = x.SelectSingleNode("id").InnerText; // Vai encontrar o id do filme. Precisamos acessar a lista XML dos filmes para pegar o título desse filme.
+          string idFilme = x.SelectSingleNode("idFilme").InnerText; // Vai encontrar o id do filme. Precisamos acessar a lista XML dos filmes para pegar o título desse filme.
+          string idSessao = x.SelectSingleNode("id").InnerText;
           string horario_filme = x.SelectSingleNode("horario").InnerText;
-          string sala_filme = x.SelectSingleNode("idSala").InnerText;
+          string precoFilmeString = x.SelectSingleNode("preco").InnerText;
+          string ingressosDisponiveisString = x.SelectSingleNode("ingressosDisponiveis").InnerText;
+
 
           List<string> titulosFilmesDisponiveis = new List<string>();
 
@@ -513,31 +519,47 @@ public class Program {
           string tituloFilmeString = filmeNode.SelectSingleNode("titulo").InnerText;
           titulosFilmesDisponiveis.Add(tituloFilmeString);
 
-          Console.WriteLine($"Título do filme: {tituloFilmeString}  Preço:    Ingressos Disponíveis:   Horario:  {horario_filme}");
+          Console.WriteLine($" Id da Sessão: {idSessao}\n Título do filme: {tituloFilmeString}\n Preço:{precoFilmeString}R$ \n Ingressos Disponíveis:  {ingressosDisponiveisString} \n Horario:  {horario_filme}h\n");
 
-        }else{
-          Console.WriteLine("Não há sessões de filmes para este dia!");
+
         }
       }
+      if(filmesDisponiveisSimNao == false){
+          Console.WriteLine("Não há sessões disponíveis!!");
+          // volta o fluxo
 
+      }
 
     }
-
-
-
-
-
-
+    if(filmesDisponiveisSimNao == true){ // Se existir filmes disponíveis:
+      IngressoInserir();
+    }
 
   }
 
   public static void VeringressosComprados(){
+    XmlDocument xml_ingressos = new XmlDocument(); // instância da classe XMLDocument 
+    xml_ingressos.Load("Ingresso.xml"); 
+    XmlNodeList ingressos_ = xml_ingressos.SelectNodes("//Ingresso"); 
 
+    int string_id_user = int.Parse(UsuarioIdGlobal);
+
+    Console.WriteLine($"Ingressos comprados :");
+    foreach(XmlNode z in ingressos_){
+      int id_usuario_ingresso = int.Parse(z.SelectSingleNode("idUsuario").InnerText);
+      int id_sessao_ingresso = int.Parse(z.SelectSingleNode("idSessao").InnerText);
+      
+
+      if(id_usuario_ingresso == string_id_user){
+        Console.WriteLine("Informações do ingresso: ");
+        Console.WriteLine($"Número da Sessão: {id_sessao_ingresso}");
+
+        Console.WriteLine(" ");
+
+
+      }
+    }
   }
-
-  // ComprarIngresso
-  // Atualizar sessao
-  // IngressoInserir
 
 } // Chave do arquivo program
 

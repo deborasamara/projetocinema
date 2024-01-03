@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfIngresso xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Ingresso>
+    <id>1</id>
+    <idSessao>1</idSessao>
+    <idUsuario>3</idUsuario>
+  </Ingresso>
+</ArrayOfIngresso>

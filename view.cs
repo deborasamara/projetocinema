@@ -1,5 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Xml;
+using System.Xml.Serialization;
 
 static class View {
     // CRUDs USUÁRIO
@@ -59,9 +64,9 @@ static class View {
     }
 
     // CRUDs Ingressos
-     public static void IngressoInserir(int IdSessao){
+     public static void IngressoInserir(int IdSessaop, int idUsuariop){
         try{
-            Ingresso x = new Ingresso{};
+            Ingresso x = new Ingresso{idSessao = IdSessaop, idUsuario = idUsuariop};
             NIngresso y = new NIngresso();
             y.Inserir(x);
         }catch(Exception ex){
@@ -109,10 +114,37 @@ static class View {
         y.Atualizar(x);
     }
 
-    public static void SessaoAtualizarApenasIngresso(int n_sessao, int sessao_ingressos){
-        Sessao x = new  Sessao{id = n_sessao, ingressosDisponiveis = sessao_ingressos};
-        NSessao y = new NSessao();
-        y.Atualizar(x);
+    public static void SessaoAtualizarApenasIngresso(int n_sessao){
+        // Cria objeto do tipo XML para que eu possa carregar e manipular 
+        XmlDocument documento = new XmlDocument();
+        // Carrega o conteúdo do arquivo XML no objeto 
+        documento.Load("Sessao.xml");
+        //Seleciona todos os nós da sessão dentro do caminho 
+        XmlNodeList sessoesNodes = documento.SelectNodes("/ArrayOfSessao/Sessao");
+        //Encontra o primeiro nó da Sessão que o Id seja igual ao valor dito
+        /*
+        
+        sessoesNodes -> Coleção de nós XML
+        .Cast<XmlNode> -> converter os elementos da coleção em "sessoesNodes", já que o xmlNodeList não é enumerável
+        .FirstOrDefault -> Encontrar o primeiro elemento que atenda a exigência.
+        n -> XmlNode
+        n.SelectSingleNode("id")  -> Seleciona o id dentro do XmLnode
+        n.SelectSingleNode("id).InnerText -: Obtem o texto
+        n_sessao.ToString() -> converte o valor da sessao pedida em string
+        
+        */
+        XmlNode sessaoNode = sessoesNodes.Cast<XmlNode>()
+        .FirstOrDefault(n => n.SelectSingleNode("id").InnerText == n_sessao.ToString());
+        // Seleciona o "nó" ingressos disponíveis 
+        XmlNode ingressosNode = sessaoNode.SelectSingleNode("ingressosDisponiveis");  
+        // Converte o valor desse nó de string para int
+        int ingressosDisponiveis = int.Parse(ingressosNode.InnerText);
+        // decrementa o valor dos ingressos e atualiza o valor no "nó"
+        ingressosNode.InnerText = (ingressosDisponiveis - 1).ToString();
+        // Salva as alterações
+        documento.Save("Sessao.xml");
+        // Avisa que deu certo
+        Console.WriteLine("Ingresso comprado com sucesso!");            
     }
 
     public static void SessaoExcluir(int Id) {
