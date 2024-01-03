@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfIngresso xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Ingresso>
+    <id>1</id>
+    <idSessao>1</idSessao>
+    <idUsuario>3</idUsuario>
+  </Ingresso>
+  <Ingresso>
+    <id>2</id>
+    <idSessao>2</idSessao>
+    <idUsuario>2</idUsuario>
+  </Ingresso>
+  <Ingresso>
+    <id>3</id>
+    <idSessao>4</idSessao>
+    <idUsuario>2</idUsuario>
+  </Ingresso>
+</ArrayOfIngresso>

@@ -1,4 +1,3 @@
-namespace projetocinema;
 
 using System; 
 using System.Collections.Generic;
@@ -6,14 +5,18 @@ using System.IO;
 using System.Xml.Serialization;
 
 public class Usuario : IModelo {
-  private int id;
+  public int id{get; set;}
   //private TipoUsuario tipo;
-  private int cpf;
-  private string nome;
-  private string email;
-  private string senha;
+  public string cpf{get; set;}
+  public string nome{get; set;}
+  public string email{get; set;}
+  public string senha{get; set;}
 
   public override string ToString(){
     return "Usuario: " + id + " - " + nome + " - " + email + " - " + cpf;
   }
+}
+
+class NUsuario : NModelo<Usuario> {
+  public NUsuario() : base("Usuario.xml") { }
 }

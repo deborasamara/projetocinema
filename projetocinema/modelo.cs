@@ -1,11 +1,11 @@
-namespace projetocinema;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 
 interface IModelo {
-    private int id { get; set; }
+    int id { get; set;}
 }
 
 // Classe genérica

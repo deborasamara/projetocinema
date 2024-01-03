@@ -1,20 +1,21 @@
-namespace projetocinema;
+
 using System; 
 using System.Collections.Generic;
+using System.Data.Common;
 using System.IO;
 using System.Xml.Serialization;
 
 public class Sala : IModelo {
-  private int id {get; set;}
+  public int id {get; set;}
+
+  public string nome {get; set;}
 
   public override string ToString(){
-    return "Sala: " + id;
+    return "Número: " +id + " Sala: " + nome;
   }
   
 }
 
-/*public class NSala : <Sala>{
-  public NSala() : base("Sala.xml");
-  public List<Sala> Listar
-
-}*/
+class NSala : NModelo<Sala> {
+  public NSala() : base("Sala.xml") { }
+}
